@@ -1,0 +1,229 @@
+I am planning on creating a functional calculator using only JavaScript, please help me on this
+Creating a functional calculator using JavaScript is definitely possible! There are a few different ways you could approach this, but one simple method would be to create a series of functions, each one representing a different mathematical operation (e.g. addition, subtraction, multiplication, etc.).
+
+Here's some sample code that demonstrates how you could create a basic calculator that can perform addition, subtraction, multiplication, and division:
+
+// Addition function
+function add(a, b) {
+    return a + b;
+}
+
+// Subtraction function
+function subtract(a, b) {
+    return a - b;
+}
+
+// Multiplication function
+function multiply(a, b) {
+    return a * b;
+}
+
+// Division function
+function divide(a, b) {
+    if (b == 0) {
+        return "Error: Cannot divide by 0.";
+    }
+    return a / b;
+}
+
+You can create the UI of calculator like buttons with the respective numbers and operation, and when clicked it calls the appropriate function with the required parameters.
+
+You can also add some advanced features in it like :
+
+keyboard operations
+handling of decimal numbers
+handling of large numbers
+You can use JavaScript event listeners, such as click or keydown events, to track when the user clicks on the calculator's buttons or types on the keyboard, and then use the appropriate function to perform the calculation.
+
+This is just a basic example to give you an idea of how you could create a simple calculator using JavaScript. There's a lot more you can do with JavaScript to make your calculator more advanced and user-friendly.
+
+Let me know if you need more help or need more specific information on any of the steps.
+
+
+---
+
+Create the UI of calculator like buttons with the respective numbers and operation, and when clicked it calls the appropriate function with the required parameters.
+Here's an example of how you could create the user interface (UI) for your calculator using HTML and CSS:
+
+<div class="calculator">
+  <div class="display"></div>
+  <div class="buttons">
+    <button class="button operator" value="clear">C</button>
+    <button class="button operator" value="backspace">CE</button>
+    <button class="button operator" value="%">%</button>
+    <button class="button operator" value="/">&divide;</button>
+    <button class="button" value="7">7</button>
+    <button class="button" value="8">8</button>
+    <button class="button" value="9">9</button>
+    <button class="button operator" value="*">&times;</button>
+    <button class="button" value="4">4</button>
+    <button class="button" value="5">5</button>
+    <button class="button" value="6">6</button>
+    <button class="button operator" value="-">-</button>
+    <button class="button" value="1">1</button>
+    <button class="button" value="2">2</button>
+    <button class="button" value="3">3</button>
+    <button class="button operator" value="+">+</button>
+    <button class="button" value="0">0</button>
+    <button class="button" value=".">.</button>
+    <button class="button operator" value="=">=</button>
+  </div>
+</div>
+Copy code
+.calculator {
+  width: 300px;
+  margin: 0 auto;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.display {
+  width: 100%;
+  height: 80px;
+  font-size: 2em;
+  background-color: #fff;
+  border: none;
+  text-align: right;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.button {
+  width: 25%;
+  height: 60px;
+  font-size: 1.5em;
+  background-color: #fff;
+  border: none;
+  color: #333;
+}
+
+.button:hover {
+  background-color: #eee;
+}
+
+.operator {
+  background-color: #ddd;
+}
+You can create event listener on button clicks using javascript :
+
+
+const buttons = document.querySelectorAll('.button');
+buttons.forEach( button => {
+    button.addEventListener('click', (e) => {
+        let value = e.target.value;
+        if(value === 'clear') clear() // calls the clear function
+        else if(value === 'backspace') backspace() // calls the backspace function
+        else if(value === '%') operation('%') 
+        else if(value === '*') operation('*') 
+        else if(value === '/') operation('/') 
+        else if(value === '-') operation('-') 
+        else if(value === '+') operation('+') 
+        else if(value === '=') operation('=')
+        else if(value === '.') addDecimal()
+        else if(isNumber(value)) addNumber(value)
+    })
+})
+
+Here, we are adding event listener on all the buttons and performing different operations based on the value of button clicked.
+addNumber and addDecimal functions will handle adding number to the display and operation function will perform the respective mathematical operation.
+
+It's important to note that this is just one way to approach creating a calculator using JavaScript, and you can customize it and add more features as per your requirement.
+Let me know if you need more help or have any other question
+
+---
+
+Please help me write the code implement those methods and performs the operations
+Sure, here is some sample code that demonstrates how you could implement the methods to perform the operations and update the display:
+
+//Global variables to keep track of current number, previous number and operation
+let currentNumber = '';
+let previousNumber = '';
+let operation = undefined;
+
+// function to clear the display
+function clear() {
+    currentNumber = '';
+    previousNumber = '';
+    operation = undefined;
+}
+
+// function to delete the last digit from current number
+function backspace() {
+    currentNumber = currentNumber.toString().slice(0, -1);
+}
+
+// function to add decimal point to current number
+function addDecimal() {
+    if (!currentNumber.includes('.')) {
+        currentNumber += '.';
+    }
+}
+
+// function to add number to current number
+function addNumber(number) {
+    currentNumber = currentNumber.toString() + number.toString();
+}
+
+// function to perform the mathematical operation
+function operate(operator) {
+    if(operator === '+' || operator === '-' || operator === '*' || operator === '/' || operator === '%') {
+        previousNumber = currentNumber;
+        currentNumber = '';
+        operation = operator;
+    } else if(operator === '=') {
+        currentNumber = eval(previousNumber + operation + currentNumber);
+        operation = undefined;
+        previousNumber = '';
+    }
+}
+
+Here, we have defined global variables to keep track of the current number, previous number and the operation performed.
+In the clear() function, we're resetting the value of currentNumber, previousNumber and operation to undefined.
+The backspace() function will remove the last digit of the current number.
+addDecimal() function will add decimal point to current number if it does not already contain a decimal point.
+addNumber() function will add the number to current number.
+operate() function will take operator as input and perform the respective mathematical operation, update the current and previous number and operation.
+
+In order to display the current number on the UI, you can use innerHTML property of the display element, for example:
+
+const display = document.querySelector('.display');
+
+// update display function
+function updateDisplay() {
+    display.innerHTML = currentNumber;
+}
+
+You can call the updateDisplay() function inside the addNumber(), addDecimal() and operate() function so that it updates the display every time a number or operation is performed.
+
+And you can call the above-defined functions inside the button click event listener like this:
+
+button.addEventListener('click', (e) => {
+    let value = e.target.value;
+    if(value === 'clear') clear(); updateDisplay();
+    else if(value === 'backspace') backspace(); updateDisplay();
+    else if(value === '%' || value === '+' || value === '-' || value === '*' || value === '/') {
+            operate(value); updateDisplay();
+    } 
+    else if(value === '=') {
+        operate(value); updateDisplay();
+    }
+    else if(value === '.') addDecimal(); updateDisplay();
+    else if(isNumber(value)) {
+        addNumber(value); updateDisplay();
+    }
+})
+
+In the isNumber function, you can use typeof or isNaN to check if the input is a number or not before calling the addNumber() function. Here's an example of how you could define the isNumber function:
+
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+This is just a basic example of a calculator you can use javascript and html to create a calculator, you can add more features as per your requirement.
+Let me know if you need help with anything else or have any question on the provided code.
